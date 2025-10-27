@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { MetricCard } from "@/components/MetricCard";
 import { SoilChart } from "@/components/SoilChart";
 import { Droplets, Flame, Leaf, Wind } from "lucide-react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Legend } from "recharts";
 
 // Mock data for demonstration
 const currentMetrics = {
@@ -170,6 +170,27 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Additional Bar Chart for Weekly Moisture */}
+        <div className="bg-card rounded-xl p-4 shadow-md">
+          <h2 className="text-lg font-semibold mb-2">Weekly Moisture Comparison</h2>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={weeklyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="4 4" className="stroke-border/60" />
+              <XAxis dataKey="date" className="text-xs font-medium" tickLine={false} axisLine={{ stroke: 'hsl(var(--border))', strokeWidth: 2 }} />
+              <YAxis className="text-xs font-medium" tickLine={false} axisLine={{ stroke: 'hsl(var(--border))', strokeWidth: 2 }} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "hsl(var(--card))",
+                  border: "1.5px solid hsl(var(--border))",
+                  borderRadius: "var(--radius)",
+                  boxShadow: "0 4px 24px 0 rgb(80 72 229 / 0.10)",
+                }}
+              />
+              <Legend iconType="circle" wrapperStyle={{ fontWeight: 500 }} />
+              <Bar dataKey="moisture" fill="#60a5fa" name="Moisture (%)" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
         {/* Alerts */}
         <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg space-y-2">
           <h2 className="font-semibold text-red-700">⚠ Alerts</h2>
