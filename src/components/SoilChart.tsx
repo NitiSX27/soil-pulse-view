@@ -16,34 +16,37 @@ interface SoilChartProps {
 
 export const SoilChart = ({ title, data, dataKeys }: SoilChartProps) => {
   return (
-    <Card className="transition-all duration-300 hover:shadow-elevated">
+    <Card className="transition-all duration-300 hover:shadow-elevated hover:scale-[1.01] rounded-2xl bg-card/90 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-xl font-bold text-foreground drop-shadow-sm">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-            <XAxis dataKey="date" className="text-xs" />
-            <YAxis className="text-xs" />
+        <ResponsiveContainer width="100%" height={320}>
+          <LineChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <CartesianGrid strokeDasharray="4 4" className="stroke-border/60" />
+            <XAxis dataKey="date" className="text-xs font-medium" tickLine={false} axisLine={{ stroke: 'hsl(var(--border))', strokeWidth: 2 }} />
+            <YAxis className="text-xs font-medium" tickLine={false} axisLine={{ stroke: 'hsl(var(--border))', strokeWidth: 2 }} />
             <Tooltip
               contentStyle={{
                 backgroundColor: "hsl(var(--card))",
-                border: "1px solid hsl(var(--border))",
+                border: "1.5px solid hsl(var(--border))",
                 borderRadius: "var(--radius)",
+                boxShadow: "0 4px 24px 0 rgb(80 72 229 / 0.10)",
               }}
             />
-            <Legend />
-            {dataKeys.map((item) => (
+            <Legend iconType="circle" wrapperStyle={{ fontWeight: 500 }} />
+            {dataKeys.map((item, idx) => (
               <Line
                 key={item.key}
                 type="monotone"
                 dataKey={item.key}
                 stroke={item.color}
-                strokeWidth={2}
+                strokeWidth={3}
                 name={item.name}
-                dot={{ r: 3 }}
-                activeDot={{ r: 5 }}
+                dot={{ r: 4, stroke: 'white', strokeWidth: 2 }}
+                activeDot={{ r: 6, stroke: 'white', strokeWidth: 2 }}
+                isAnimationActive={true}
+                animationDuration={800 + idx * 200}
               />
             ))}
           </LineChart>
